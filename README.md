@@ -1,7 +1,7 @@
 <div align="center">
 
 # LINKSMITH
-A Java library to craft HTTP web links from raw header data
+A Java library to craft HTTP web links from serialized header data described in [RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288).
 
 
 [![Build Maven Package](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml)
