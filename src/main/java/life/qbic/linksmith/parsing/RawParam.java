@@ -24,9 +24,8 @@ public record RawParam(String name, String value) {
   /**
    * Creates a raw parameter with name and value.
    * <p>
-   * The client must not pass withoutValue or blank values as parameter value, but shall call
-   * {@link #emptyParameter(String)} explicitly. Alternatively, the client can also pass
-   * {@code null} for value, to indicate an withoutValue parameter.
+   * The client must not pass {@code null}  as parameter value, but shall call
+   * {@link #emptyParameter(String)} explicitly.
    *
    * @param name  the name of the parameter
    * @param value the value of the parameter
@@ -34,8 +33,8 @@ public record RawParam(String name, String value) {
    * @throws IllegalArgumentException in case the value is withoutValue or blank
    */
   public static RawParam withValue(String name, String value) throws IllegalArgumentException {
-    if (value != null && value.isBlank()) {
-      throw new IllegalArgumentException("Value cannot be blank");
+    if (value == null) {
+      throw new IllegalArgumentException("Value cannot be null");
     }
     return new RawParam(name, value);
   }

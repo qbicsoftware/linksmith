@@ -92,6 +92,124 @@
           </includes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>dev.sigstore</groupId>
+        <artifactId>sigstore-maven-plugin</artifactId>
+        <version>2.0.0</version>
+        <executions>
+          <execution>
+            <id>sigstore-sign</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>sigcheck</id>
+      <activation>
+        <file>
+          <exists>src/main</exists>
+        </file>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-site-plugin</artifactId>
+              <version>4.0.0-M16</version>
+            </plugin>
+            <plugin>
+              <groupId>org.simplify4u.plugins</groupId>
+              <artifactId>pgpverify-maven-plugin</artifactId>
+              <version>1.19.1</version>
+              <dependencies>
+                <dependency>
+                  <groupId>org.simplify4u</groupId>
+                  <artifactId>pgp-keys-map</artifactId>
+                  <version>2025.03.15</version> <!-- use latest available -->
+                </dependency>
+              </dependencies>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.simplify4u.plugins</groupId>
+            <artifactId>pgpverify-maven-plugin</artifactId>
+            <executions>
+              <!-- bind early so you fail fast -->
+              <execution>
+                <id>pgp-verify</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <phase>validate</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- verify build plugins too (compiler, surefire, etc.) -->
+              <verifyPlugins>true</verifyPlugins>
+              <verifyPluginDependencies>false</verifyPluginDependencies>
+              <!-- include provided deps if you want to check servlet APIs etc. -->
+              <verifyProvidedDependencies>false</verifyProvidedDependencies>
+              <!-- optionally check SNAPSHOTs as well -->
+              <verifySnapshots>false</verifySnapshots>
+              <!-- add a keys map to lock critical coords to expected fingerprints -->
+              <keysMapLocations>
+                <!-- our overrides / allow-list -->
+                <keysMapLocation>/pgp-keys-map.list</keysMapLocation>
+                <keysMapLocation>${maven.multiModuleProjectDirectory}/pgp-keys-override.list</keysMapLocation>
+              </keysMapLocations>
+              <suppressSignatureOkLogging>true</suppressSignatureOkLogging>
+              <!-- write a JSON report (optional) -->
+              <reportWrite>true</reportWrite>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.cyclonedx</groupId>
+            <artifactId>cyclonedx-maven-plugin</artifactId>
+            <version>2.8.0</version>
+            <executions>
+              <!-- Top-level aggregate SBOM covering all modules -->
+              <execution>
+                <id>aggregate-bom</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>makeAggregateBom</goal>
+                </goals>
+                <configuration>
+                  <schemaVersion>1.5</schemaVersion>
+                  <outputFormat>json</outputFormat>   <!-- produces .json -->
+                  <outputName>${project.artifactId}-${project.version}-sbom</outputName>
+                  <includeBomSerialNumber>true</includeBomSerialNumber>
+                  <includeLicenseText>true</includeLicenseText>
+                </configuration>
+              </execution>
+
+              <!-- (Optional) Per-module SBOMs; keep if you also want one per JAR -->
+              <execution>
+                <id>module-bom</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>makeAggregateBom</goal>
+                </goals>
+                <configuration>
+                  <schemaVersion>1.5</schemaVersion>
+                  <outputFormat>json</outputFormat>
+                  <includeBomSerialNumber>true</includeBomSerialNumber>
+                  <includeLicenseText>true</includeLicenseText>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
