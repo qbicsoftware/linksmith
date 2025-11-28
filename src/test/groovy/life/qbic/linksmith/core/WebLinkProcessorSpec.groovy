@@ -1,7 +1,6 @@
-package life.qbic.linksmith
+package life.qbic.linksmith.core
 
 import life.qbic.linksmith.model.WebLink
-import life.qbic.linksmith.core.WebLinkProcessor
 import life.qbic.linksmith.internal.lexing.WebLinkToken
 import life.qbic.linksmith.internal.lexing.WebLinkTokenType
 import life.qbic.linksmith.internal.parsing.RawLinkHeader

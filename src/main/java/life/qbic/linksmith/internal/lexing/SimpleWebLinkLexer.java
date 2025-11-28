@@ -26,7 +26,6 @@ public final class SimpleWebLinkLexer implements WebLinkLexer {
     return new SimpleWebLinkLexer();
   }
 
-
   @Override
   public List<WebLinkToken> lex(String input) throws LexingException {
     return new Scanner(input).scan();
