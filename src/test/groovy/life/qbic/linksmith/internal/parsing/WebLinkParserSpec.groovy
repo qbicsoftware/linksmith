@@ -1,7 +1,8 @@
-package life.qbic.linksmith.parsing
+package life.qbic.linksmith.internal.parsing
 
-import life.qbic.linksmith.WebLinkParser
-import life.qbic.linksmith.lexing.SimpleWebLinkLexer
+import life.qbic.linksmith.spi.WebLinkParser
+import life.qbic.linksmith.internal.lexing.SimpleWebLinkLexer
+import life.qbic.linksmith.internal.parsing.SimpleWebLinkParser
 import spock.lang.Specification
 
 class WebLinkParserSpec extends Specification {

@@ -1,4 +1,4 @@
-package life.qbic.linksmith.validation;
+package life.qbic.linksmith.core;
 
 import java.util.HashMap;
 import java.util.Map;

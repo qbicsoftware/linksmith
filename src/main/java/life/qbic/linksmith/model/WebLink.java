@@ -1,4 +1,4 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.model;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import life.qbic.linksmith.validation.RfcLinkParameter;
+import life.qbic.linksmith.core.RfcLinkParameter;
 
 /**
  * A Java record representing a web link object following the

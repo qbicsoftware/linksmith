@@ -1,4 +1,6 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.internal.parsing;
+
+import java.util.List;
 
 /**
  * <b><class short description - 1 Line!></b>
@@ -7,8 +9,6 @@ package life.qbic.linksmith;
  *
  * @since <version tag>
  */
-public final class FormatException extends RuntimeException {
-  public FormatException(String message) {
-    super(message);
-  }
+public record RawLinkHeader(List<RawLink> rawLinks) {
+
 }

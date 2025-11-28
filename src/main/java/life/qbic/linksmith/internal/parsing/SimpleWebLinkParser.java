@@ -1,13 +1,13 @@
-package life.qbic.linksmith.parsing;
+package life.qbic.linksmith.internal.parsing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import life.qbic.linksmith.WebLinkParser;
-import life.qbic.linksmith.WebLinkTokenType;
-import life.qbic.linksmith.lexing.WebLinkToken;
+import life.qbic.linksmith.spi.WebLinkParser;
+import life.qbic.linksmith.internal.lexing.WebLinkTokenType;
+import life.qbic.linksmith.internal.lexing.WebLinkToken;
 
 /**
  * Parses serialized information used in Web Linking as described in <a

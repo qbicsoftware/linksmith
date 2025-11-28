@@ -1,7 +1,13 @@
 package life.qbic.linksmith
 
-import life.qbic.linksmith.lexing.WebLinkToken
-import life.qbic.linksmith.parsing.RawLinkHeader
+import life.qbic.linksmith.model.WebLink
+import life.qbic.linksmith.core.WebLinkProcessor
+import life.qbic.linksmith.internal.lexing.WebLinkToken
+import life.qbic.linksmith.internal.lexing.WebLinkTokenType
+import life.qbic.linksmith.internal.parsing.RawLinkHeader
+import life.qbic.linksmith.spi.WebLinkLexer
+import life.qbic.linksmith.spi.WebLinkParser
+import life.qbic.linksmith.spi.WebLinkValidator
 import spock.lang.Specification
 import spock.lang.Unroll
 

@@ -1,15 +1,16 @@
-package life.qbic.linksmith.lexing
+package life.qbic.linksmith.internal.lexing
 
-import life.qbic.linksmith.WebLinkLexer
-import life.qbic.linksmith.WebLinkLexer.LexingException
-import life.qbic.linksmith.WebLinkTokenType
+import life.qbic.linksmith.spi.WebLinkLexer
+import life.qbic.linksmith.spi.WebLinkLexer.LexingException
+import life.qbic.linksmith.internal.lexing.WebLinkTokenType
+import life.qbic.linksmith.internal.lexing.SimpleWebLinkLexer
 import spock.lang.Specification
 
 /**
  * Specification for a {@link WebLinkLexer} implementation.
  *
  * These tests verify that a raw Web Link (RFC 8288) serialisation
- * is correctly tokenised into a sequence of {@link WebLinkToken}s,
+ * is correctly tokenised into a sequence of {@link life.qbic.linksmith.internal.lexing.WebLinkToken}s,
  * ending with an EOF token, and that malformed input causes a
  * {@link LexingException}.
  *

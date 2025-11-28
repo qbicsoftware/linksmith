@@ -1,9 +1,8 @@
-package life.qbic.linksmith.lexing;
+package life.qbic.linksmith.internal.lexing;
 
 import java.util.ArrayList;
 import java.util.List;
-import life.qbic.linksmith.WebLinkLexer;
-import life.qbic.linksmith.WebLinkTokenType;
+import life.qbic.linksmith.spi.WebLinkLexer;
 
 /**
  * Simple scanning lexer for RFC 8288 Web Link serialisations.

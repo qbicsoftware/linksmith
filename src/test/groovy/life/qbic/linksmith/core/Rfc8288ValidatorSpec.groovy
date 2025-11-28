@@ -1,11 +1,11 @@
-package life.qbic.linksmith.validation
+package life.qbic.linksmith.core
 
 
-import life.qbic.linksmith.WebLink
-import life.qbic.linksmith.WebLinkValidator
-import life.qbic.linksmith.parsing.RawLink
-import life.qbic.linksmith.parsing.RawLinkHeader
-import life.qbic.linksmith.parsing.RawParam
+import life.qbic.linksmith.model.WebLink
+import life.qbic.linksmith.spi.WebLinkValidator
+import life.qbic.linksmith.internal.parsing.RawLink
+import life.qbic.linksmith.internal.parsing.RawLinkHeader
+import life.qbic.linksmith.internal.parsing.RawParam
 import spock.lang.Specification
 
 /**

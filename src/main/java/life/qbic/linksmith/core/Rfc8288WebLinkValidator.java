@@ -1,4 +1,4 @@
-package life.qbic.linksmith.validation;
+package life.qbic.linksmith.core;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
-import life.qbic.linksmith.WebLink;
-import life.qbic.linksmith.WebLinkParameter;
-import life.qbic.linksmith.WebLinkValidator;
-import life.qbic.linksmith.parsing.RawLink;
-import life.qbic.linksmith.parsing.RawLinkHeader;
-import life.qbic.linksmith.parsing.RawParam;
+import life.qbic.linksmith.model.WebLink;
+import life.qbic.linksmith.model.WebLinkParameter;
+import life.qbic.linksmith.spi.WebLinkValidator;
+import life.qbic.linksmith.internal.parsing.RawLink;
+import life.qbic.linksmith.internal.parsing.RawLinkHeader;
+import life.qbic.linksmith.internal.parsing.RawParam;
 
 /**
  * Validation against RFC 8288 Web Linking.

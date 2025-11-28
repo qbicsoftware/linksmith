@@ -1,4 +1,4 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.internal.lexing;
 
 /**
  * Enumeration for being used to describe different token types for the

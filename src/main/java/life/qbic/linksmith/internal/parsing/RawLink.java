@@ -1,4 +1,4 @@
-package life.qbic.linksmith.parsing;
+package life.qbic.linksmith.internal.parsing;
 
 import java.util.List;
 

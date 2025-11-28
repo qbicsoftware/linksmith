@@ -1,4 +1,4 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.model;
 
 /**
  * A parameter for the HTTP Link header attribute.

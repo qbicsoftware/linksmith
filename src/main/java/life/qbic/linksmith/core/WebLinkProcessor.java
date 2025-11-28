@@ -1,16 +1,18 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import life.qbic.linksmith.WebLinkLexer.LexingException;
-import life.qbic.linksmith.WebLinkParser.StructureException;
-import life.qbic.linksmith.WebLinkValidator.Issue;
-import life.qbic.linksmith.WebLinkValidator.IssueReport;
-import life.qbic.linksmith.WebLinkValidator.ValidationResult;
-import life.qbic.linksmith.lexing.SimpleWebLinkLexer;
-import life.qbic.linksmith.parsing.SimpleWebLinkParser;
-import life.qbic.linksmith.validation.Rfc8288WebLinkValidator;
+import life.qbic.linksmith.spi.WebLinkLexer;
+import life.qbic.linksmith.spi.WebLinkLexer.LexingException;
+import life.qbic.linksmith.spi.WebLinkParser;
+import life.qbic.linksmith.spi.WebLinkParser.StructureException;
+import life.qbic.linksmith.spi.WebLinkValidator;
+import life.qbic.linksmith.spi.WebLinkValidator.Issue;
+import life.qbic.linksmith.spi.WebLinkValidator.IssueReport;
+import life.qbic.linksmith.spi.WebLinkValidator.ValidationResult;
+import life.qbic.linksmith.internal.lexing.SimpleWebLinkLexer;
+import life.qbic.linksmith.internal.parsing.SimpleWebLinkParser;
 
 /**
  * Configurable processor for raw web link strings from the HTTP Link header field.

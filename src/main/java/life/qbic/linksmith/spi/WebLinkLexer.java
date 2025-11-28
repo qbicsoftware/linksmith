@@ -1,7 +1,7 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.spi;
 
 import java.util.List;
-import life.qbic.linksmith.lexing.WebLinkToken;
+import life.qbic.linksmith.internal.lexing.WebLinkToken;
 
 /**
  * Lexes a single Web Link (RFC 8288) serialisation string into a list of tokens.

@@ -1,7 +1,8 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.spi;
 
 import java.util.List;
-import life.qbic.linksmith.parsing.RawLinkHeader;
+import life.qbic.linksmith.model.WebLink;
+import life.qbic.linksmith.internal.parsing.RawLinkHeader;
 
 /**
  * Performs validation of raw web link headers.

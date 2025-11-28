@@ -1,8 +1,8 @@
-package life.qbic.linksmith;
+package life.qbic.linksmith.spi;
 
 import java.util.List;
-import life.qbic.linksmith.lexing.WebLinkToken;
-import life.qbic.linksmith.parsing.RawLinkHeader;
+import life.qbic.linksmith.internal.lexing.WebLinkToken;
+import life.qbic.linksmith.internal.parsing.RawLinkHeader;
 
 /**
  * A parser that checks structural integrity of an HTTP Link header entry in compliance with <a

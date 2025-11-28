@@ -1,6 +1,4 @@
-package life.qbic.linksmith.lexing;
-
-import life.qbic.linksmith.WebLinkTokenType;
+package life.qbic.linksmith.internal.lexing;
 
 /**
  * Single token produced by a WebLinkLexer.
