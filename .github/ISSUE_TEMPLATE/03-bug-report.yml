@@ -1,8 +1,7 @@
 name: Bug Report
 description: File a bug report.
 title: "[Provide a short descriptive title]"
-labels: ["bug", "triage"]
-projects: ["qbicsoftware/25"]
+labels: ["bug", "unconfirmed"]
 body:
   - type: markdown
     attributes:

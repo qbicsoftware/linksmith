@@ -1,8 +1,7 @@
 name: Sub-issue
 description: File a sub-issue.
 title: "[Provide a short descriptive title]"
-labels: ["sub-issue", "triage"]
-projects: ["qbicsoftware/25"]
+labels: ["sub-issue"]
 body:
   - type: markdown
     attributes:
