@@ -83,4 +83,6 @@ jobs:
         run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml -Prelease -DskipTests deploy
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
+          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
 
