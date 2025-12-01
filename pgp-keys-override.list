@@ -6,3 +6,6 @@ org.codehaus.gmavenplus:gmavenplus-plugin = 0x0867FACD3788F7B0BB24CD1FD90C38195B
 
 # cyclonedx-maven-plugin
 org.cyclonedx:cyclonedx-maven-plugin = 0xFA77DCFEF2EE6EB2DEBEDD2C012579464D01C06A
+
+# Sonatype deployment plugin
+org.sonatype.central:central-publishing-maven-plugin:0.9.0 = 0x27C7B9756A9C691EE87696FB5C9BD9F4EAAD7054
