@@ -6,7 +6,33 @@
 
   <groupId>life.qbic</groupId>
   <artifactId>linksmith</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A Java library to craft HTTP web links from serialized header data described in RFC 8288.</description>
+  <url>https://github.com/qbicsoftware/linksmith</url>
+
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License, Version 3.0</name>
+      <url>https://www.gnu.org/licenses/agpl-3.0.html.en#license-text</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Sven Fillinger</name>
+      <email>sven.fillinger@uni-tuebingen.de</email>
+      <organization>University of Tübingen</organization>
+      <organizationUrl>https://uni-tuebingen.de</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/qbicsoftware/linksmith.git</connection>
+    <developerConnection>scm:git:ssh://github.com:qbicsoftware/linksmith.git</developerConnection>
+    <url>http://github.com/qbicsoftware/linksmith/tree/main</url>
+  </scm>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
