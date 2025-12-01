@@ -6,12 +6,12 @@ package life.qbic.linksmith.internal.lexing;
 public enum WebLinkTokenType {
 
   /**
-   * "<"
+   * "{@literal <}"
    */
   LT,
 
   /**
-   * ">"
+   * "{@literal >}"
    */
   GT,
 
@@ -31,7 +31,7 @@ public enum WebLinkTokenType {
   COMMA,
 
   /**
-   * A URI-Reference between "<" and ">". The angle brackets themselves are represented by LT and GT
+   * A URI-Reference between "{@literal <}" and "{@literal >}". The angle brackets themselves are represented by LT and GT
    * tokens.
    */
   URI,

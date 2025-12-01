@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import life.qbic.linksmith.spi.WebLinkParser;
-import life.qbic.linksmith.internal.lexing.WebLinkTokenType;
 import life.qbic.linksmith.internal.lexing.WebLinkToken;
+import life.qbic.linksmith.internal.lexing.WebLinkTokenType;
+import life.qbic.linksmith.spi.WebLinkParser;
 
 /**
  * Parses serialized information used in Web Linking as described in <a
@@ -19,10 +19,15 @@ import life.qbic.linksmith.internal.lexing.WebLinkToken;
  * Note: the implementation of this class is NOT thread-safe.
  *
  * <p>
- * <code>
- * Link       = #link-value <br> link-value = "<" URI-Reference ">" *( OWS ";" OWS link-param ) <br>
- * link-param = token BWS [ "=" BWS ( token / quoted-string ) ]
- * </code>
+ *
+ * <pre>
+ * {@code
+ * Link =
+ *  #link-value link-value = "<" URI-Reference ">" *( OWS ";" OWS link-param )
+ * link-param =
+ *  token BWS [ "=" BWS ( token / quoted-string ) ]
+ * }
+ * </pre>
  *
  */
 public class SimpleWebLinkParser implements WebLinkParser {
@@ -240,8 +245,7 @@ public class SimpleWebLinkParser implements WebLinkParser {
   /**
    * Checks if the current token matches any (at least one) expected token.
    * <p>
-   * If no expected type is provided, the method will throw a
-   * {@link StructureException}.
+   * If no expected type is provided, the method will throw a {@link StructureException}.
    *
    * @param expected zero or more expected token types.
    * @throws StructureException if the current token does not match any expected token
