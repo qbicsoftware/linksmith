@@ -14,7 +14,7 @@ import life.qbic.linksmith.core.RfcLinkParameter;
  * A Java record representing a web link object following the
  * <a href="https://datatracker.ietf.org/doc/html/rfc8288">RFC 8288</a> model specification.
  */
-public record WebLink(URI reference, List<WebLinkParameter> params) {
+public record WebLink(URI target, List<WebLinkParameter> params) {
 
   /**
    * Creates an <a href="https://datatracker.ietf.org/doc/html/rfc8288">RFC 8288</a> compliant web

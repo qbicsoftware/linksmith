@@ -47,7 +47,7 @@ class Rfc8288ValidatorSpec extends Specification {
         and: "exactly one WebLink is produced with the expected URI and withoutValue params"
         result.weblinks().size() == 1
         WebLink link = result.weblinks().first()
-        link.reference().toString() == "https://example.org/resource"
+        link.target().toString() == "https://example.org/resource"
         link.params().isEmpty()
     }
 
@@ -100,7 +100,7 @@ class Rfc8288ValidatorSpec extends Specification {
 
         and: "the valid URI still yields a WebLink"
         result.weblinks().size() == 1
-        result.weblinks().first().reference().toString() == "https://example.org/valid"
+        result.weblinks().first().target().toString() == "https://example.org/valid"
     }
 
     /**
