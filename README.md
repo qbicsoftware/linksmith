@@ -26,7 +26,7 @@ in [RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288).
 <version>1.0.0</version>
 ```
 
-Check the official [Maven Repository](https://mvnrepository.com/) for the latest version.
+Check the latest component version on [Maven Central](https://central.sonatype.com/artifact/life.qbic/linksmith/).
 
 ## Example: authors of a web resource
 
