@@ -44,6 +44,13 @@ jobs:
           git config --global user.email "support@qbic.zendesk.com"
           git config --global user.name "JohnnyQ5"
 
+      - name: Import GPG private key
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          gpg --list-secret-keys
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
       - name: Set version in Maven project
         run: mvn versions:set -DnewVersion=${{ github.event.inputs.versionTag }} -DprocessAllModules
 
