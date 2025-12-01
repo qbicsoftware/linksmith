@@ -92,12 +92,6 @@ jobs:
         with:
           subject-path: "**/target/*.jar"
 
-      - name: Publish artefact to QBiC Nexus Repository
-        run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml -Pproduction -DskipTests -Dvaadin.force.production.build=true deploy
-        env:
-          MAVEN_REPO_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          MAVEN_REPO_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-
       - name: Switch to new branch
         run: git checkout -b release/set-version-to-${{ github.event.inputs.versionTag }}
 
