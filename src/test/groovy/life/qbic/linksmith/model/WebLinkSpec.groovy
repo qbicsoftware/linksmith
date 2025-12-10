@@ -4,8 +4,6 @@ import spock.lang.Specification
 
 class WebLinkSpec extends Specification {
 
-
-
     def "In case the type parameter is present, the web link object must make it available"() {
         given:
         def weblink = weblink("https://example.com/1234", List.of(type("text/plain")))
