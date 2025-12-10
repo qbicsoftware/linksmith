@@ -145,7 +145,6 @@ class Rfc8288ValidatorSpec extends Specification {
     def "parameter without value is accepted at RFC level"() {
         given:
         // Example representation: parameter present with null value.
-        // Adapt this to your actual RawLink model.
         def params = [new RawParam("rel", null)]
         def rawHeader = new RawLinkHeader([
                 new RawLink("https://example.org/no-value-param", params)
@@ -167,7 +166,6 @@ class Rfc8288ValidatorSpec extends Specification {
     def "parameter anchor with one occurrence is allowed"() {
         given:
         // Example representation: parameter present with null value.
-        // Adapt this to your actual RawLink model.
         def params = [new RawParam("anchor", "https://example.org/one-anchor-only")]
         def rawHeader = new RawLinkHeader([
                 new RawLink("https://example.org/one-anchor-only", params)
@@ -186,10 +184,9 @@ class Rfc8288ValidatorSpec extends Specification {
         !result.report().hasErrors()
     }
 
-    def "a parameter with allowed multiplicity of 1 must be only processed on the first occurrence"() {
+    def "the rel parameter with allowed multiplicity of 1 must be only processed on the first occurrence"() {
         given:
         // Example representation: parameter present with null value.
-        // Adapt this to your actual RawLink model.
         def firstParam = new RawParam("rel", "https://example.org/first-occurrence")
         def secondParam = new RawParam("rel", "https://example.org/next-occurrence")
         def params = [firstParam, secondParam]
@@ -218,10 +215,40 @@ class Rfc8288ValidatorSpec extends Specification {
         relations.get(0).equals(firstParam.value())
     }
 
+    def "the type parameter with allowed multiplicity of 1 must be only processed on the first occurrence"() {
+        given:
+        // Example representation: parameter present with null value.
+        def firstParam = new RawParam("type", "text/plain")
+        def secondParam = new RawParam("type", "application/pdf")
+        def params = [firstParam, secondParam]
+        def rawHeader = new RawLinkHeader([
+                new RawLink("https://example.org/one-type-only", params)
+        ])
+
+        and:
+        def validator = Rfc8288WebLinkValidator.create()
+
+        when:
+        WebLinkValidator.ValidationResult result = validator.validate(rawHeader)
+
+        then: "URI is valid, so we get a WebLink back"
+        result.weblinks().size() == 1
+
+        and: "parameter type with only one occurrence does not cause an error at RFC-level"
+        !result.report().hasErrors()
+
+        and: "but results in a warning, since the second occurrence is skipped"
+        result.report().hasWarnings()
+
+        and: "uses only the value of the first occurrence"
+        var typeOptional = result.weblinks().get(0).type()
+        typeOptional.isPresent()
+        typeOptional.get().equals(firstParam.value())
+    }
+
     def "the rel parameter can contain multiple relations as whitespace-separated list"() {
         given:
         // Example representation: parameter present with null value.
-        // Adapt this to your actual RawLink model.
         def firstParam = new RawParam("rel", "self describedby     another")
         def params = [firstParam]
         def rawHeader = new RawLinkHeader([
@@ -252,7 +279,6 @@ class Rfc8288ValidatorSpec extends Specification {
     def "parameter anchor must not have multiple occurrences"() {
         given:
         // Example representation: parameter present with null value.
-        // Adapt this to your actual RawLink model.
         def params = [new RawParam("anchor", "https://example.org/one-anchor-only"),
                       new RawParam("anchor", "https://example.org/another-anchor")]
         def rawHeader = new RawLinkHeader([
