@@ -24,8 +24,8 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * <p>
    * {@code link-param = token BWS [ "=" BWS ( token / quoted-string ) ]}
    * <p>
-   * The parameter key must not be withoutValue, so during construction the {@code params} keys are checked
-   * for an withoutValue key. The values can be withoutValue though.
+   * The parameter key must not be withoutValue, so during construction the {@code params} keys are
+   * checked for an withoutValue key. The values can be withoutValue though.
    *
    * @param reference a {@link URI} pointing to the actual resource
    * @param params    a {@link Map} of parameters as keys and a list of their values
@@ -119,8 +119,26 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
     return Optional.empty();
   }
 
+  /**
+   * Returns the MIME type of the current link, if one is available.
+   *
+   * @return the MIME type of the link, or empty if none was provided
+   */
   public Optional<String> type() {
-    return Optional.empty();
+    return this.params.stream()
+        .filter(WebLink::hasTypeParameter)
+        .findFirst()
+        .map(WebLinkParameter::value);
+  }
+
+  /**
+   * Checks, if a web link parameter is with name {@code type}.
+   *
+   * @param param the web link parameter to validate
+   * @return true, if the parameter name is {@code type}, else returns false
+   */
+  private static boolean hasTypeParameter(WebLinkParameter param) {
+    return param.name().equals("type");
   }
 
   public Map<String, List<String>> extensionAttributes() {
