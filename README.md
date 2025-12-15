@@ -1,6 +1,9 @@
 <div align="center">
 
-# LINKSMITH
+<p align="center">
+  <img src="docs/assets/logo/linksmith-logo-light.svg#gh-light-mode-only" alt="Linksmith logo" width="200">
+  <img src="docs/assets/logo/linksmith-logo-dark.svg#gh-dark-mode-only" alt="Linksmith logo" width="200">
+</p>
 
 [![Build Maven Package](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml)
 [![Run Maven Tests](https://github.com/qbicsoftware/linksmith/actions/workflows/run_tests.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/run_tests.yml)
