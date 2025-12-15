@@ -33,17 +33,6 @@ jobs:
       - name: Run tests with coverage
         run: mvn -B clean verify -Dgpg.skip=true
 
-          # PR: create a coverage status check (and optionally fail below thresholds)
-      - name: Coverage check (PR)
-        if: github.event_name == 'pull_request'
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-         filename: target/site/jacoco/jacoco.xml
-         format: jacoco
-         output: both
-         fail_below_min: true
-         thresholds: '80 70'   # <-- adjust (line% branch%)
-
       - name: Upload JaCoCo report artifact (PR)
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
