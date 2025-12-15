@@ -81,3 +81,10 @@ This will result in the following printout:
 https://orcid.org/0009-0006-0929-9338  
 https://ror.org/00v34f693
 ```
+
+# Branding and Logo
+
+The Linksmith name and logo are **not covered by the AGPL-3.0 license**.
+
+Logo design © 2025 Sven Fillinger and Shraddha Pawar.
+Used with permission. All rights reserved.
