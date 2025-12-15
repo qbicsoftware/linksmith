@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run tests with coverage
-        run: mvn -B clean test
+        run: mvn -B clean verify
           
           # PR: create a coverage status check (and optionally fail below thresholds)
       - name: Coverage check (PR)
