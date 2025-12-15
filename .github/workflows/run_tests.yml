@@ -31,8 +31,8 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run tests with coverage
-        run: mvn -B clean verify
-          
+        run: mvn -B clean verify -Dgpg.skip=true
+
           # PR: create a coverage status check (and optionally fail below thresholds)
       - name: Coverage check (PR)
         if: github.event_name == 'pull_request'
