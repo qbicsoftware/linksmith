@@ -55,6 +55,8 @@ jobs:
       - name: Upload coverage to Codecov (main only)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@v5
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           files: target/site/jacoco/jacoco.xml
           use_oidc: true
