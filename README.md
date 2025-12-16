@@ -18,6 +18,18 @@
 Linksmith — A Java library for HTTP Web Linking ([RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288))
 </div>
 
+# Why Linksmith?
+
+| Without Linksmith ❌    | With Linksmith ✅       |
+|------------------------|------------------------|
+| Raw HTTP `Link` header | Raw HTTP `Link` header |
+| Manual string parsing  | Linksmith           |
+| Custom, ad-hoc code    | Stable core API        |
+| Hard to extend         | Configurable components |
+| Error-prone results    | Structured WebLinks    |
+
+Linksmith replaces ad-hoc parsing of HTTP Link headers with a stable, configurable, standards-compliant WebLink API.
+
 # Quick start
 
 ## Resolve dependency
@@ -31,7 +43,7 @@ Linksmith — A Java library for HTTP Web Linking ([RFC 8288](https://datatracke
 
 Check the latest component version on [Maven Central](https://central.sonatype.com/artifact/life.qbic/linksmith/).
 
-## Example: authors of a web resource
+## Example: fetch authors of a web resource
 
 ```bash
 curl -I https://zenodo.org/records/17179862
