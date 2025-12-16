@@ -1,9 +1,8 @@
 cff-version: 1.2.0
-message: >
-   This software is currently in ALPHA.
+message: "This software is currently in ALPHA.
    It is shared for testing and feedback only.
    Please do not cite this version in scholarly publications.
-   A citable release will be provided once the software reaches beta or stable.
+   A citable release will be provided once the software reaches beta or stable."
 
 authors:
   - family-names: Fillinger
