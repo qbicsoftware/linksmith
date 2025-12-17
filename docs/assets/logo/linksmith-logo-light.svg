@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
-   sodipodi:docname="logo_complete_bright.svg"
+   sodipodi:docname="linksmith-logo-light.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,14 +23,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
-     inkscape:zoom="0.45166246"
-     inkscape:cx="120.66533"
-     inkscape:cy="-122.87937"
-     inkscape:window-width="1312"
-     inkscape:window-height="704"
-     inkscape:window-x="1855"
-     inkscape:window-y="104"
-     inkscape:window-maximized="0"
+     inkscape:zoom="1.8066498"
+     inkscape:cx="23.247449"
+     inkscape:cy="144.46629"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="1512"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs1">
@@ -93,18 +93,17 @@
        rx="0.91544253"
        ry="3.2549069"
        transform="matrix(0.6997963,-0.71434245,0.6997963,0.71434245,0,0)" />
-    <text
-       xml:space="preserve"
-       style="font-weight:600;font-size:9.03365px;line-height:0;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Semi-Bold';text-align:start;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#bd09d6;fill-opacity:1;stroke:none;stroke-width:2.15447;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       x="72.438271"
-       y="114.47347"
-       id="text6"><tspan
-         sodipodi:role="line"
-         id="tspan6"
-         style="font-size:9.03365px;fill:#bd09d6;fill-opacity:1;stroke:none;stroke-width:2.15447"
-         x="72.438271"
-         y="114.47347">LINK<tspan
-   style="font-size:9.03365px;fill:#232323;fill-opacity:1;stroke-width:2.15447"
-   id="tspan5">SMITH</tspan></tspan></text>
+    <g
+       id="text6"
+       style="font-weight:600;font-size:9.03365px;line-height:0;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Semi-Bold';letter-spacing:0px;fill:#bd09d6;stroke-width:2.15447;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke fill markers"
+       aria-label="LINKSMITH">
+      <path
+         d="m 73.289586,114.47347 v -6.44882 h 1.05422 v 5.54458 h 2.730386 v 0.90424 z m 4.896168,0 v -6.44882 h 1.05422 v 6.44882 z m 8.129403,0 h -1.292412 l -3.171482,-5.13877 h -0.03529 l 0.02205,0.28671 q 0.06175,0.82044 0.06175,1.49973 v 3.35233 h -0.957179 v -6.44882 h 1.279179 l 3.16266,5.1123 h 0.02647 q -0.0088,-0.10145 -0.03529,-0.73663 -0.02647,-0.63959 -0.02647,-0.99688 v -3.37879 h 0.966001 z m 6.625266,0 h -1.221837 l -2.024631,-2.92005 -0.621946,0.50726 v 2.41279 h -1.05422 v -6.44882 h 1.05422 v 3.07885 q 0.432274,-0.52932 0.860138,-1.01893 l 1.74233,-2.05992 h 1.199781 q -1.689398,1.98493 -2.421618,2.82742 z"
+         id="path3" />
+      <path
+         style="fill:#232323"
+         d="m 97.510179,112.72232 q 0,0.86014 -0.621946,1.34976 -0.621946,0.48961 -1.715864,0.48961 -1.093919,0 -1.790851,-0.33964 v -0.99688 q 0.441096,0.20732 0.935124,0.32641 0.498439,0.1191 0.926302,0.1191 0.626357,0 0.921891,-0.23819 0.299946,-0.2382 0.299946,-0.63959 0,-0.3617 -0.27348,-0.61313 -0.27348,-0.25142 -1.129206,-0.59548 -0.882193,-0.35729 -1.243891,-0.81603 -0.361699,-0.45874 -0.361699,-1.10274 0,-0.8072 0.573425,-1.27035 0.573425,-0.46315 1.539425,-0.46315 0.926303,0 1.843783,0.4058 l -0.335233,0.86014 q -0.860138,-0.3617 -1.535015,-0.3617 -0.511672,0 -0.77633,0.22496 -0.264657,0.22055 -0.264657,0.58666 0,0.25142 0.105863,0.43227 0.105863,0.17644 0.348466,0.33524 0.242603,0.15879 0.87337,0.41904 0.710165,0.29553 1.040987,0.55137 0.330822,0.25583 0.485206,0.57784 0.154384,0.322 0.154384,0.75868 z m 4.036031,1.75115 -1.870249,-5.38578 h -0.03529 q 0.07499,1.19978 0.07499,2.24959 v 3.13619 h -0.957179 v -6.44882 h 1.486499 l 1.79085,5.12994 h 0.0265 l 1.84378,-5.12994 h 1.49091 v 6.44882 h -1.01452 v -3.18912 q 0,-0.4808 0.0221,-1.25272 0.0265,-0.77191 0.0441,-0.93512 h -0.0353 l -1.93641,5.37696 z m 5.54899,0 v -6.44882 h 1.05422 v 6.44882 z m 4.98439,0 h -1.05422 v -5.54458 h -1.89672 v -0.90424 h 4.84765 v 0.90424 h -1.89671 z m 7.97061,0 h -1.05863 v -2.90682 h -2.97299 v 2.90682 h -1.05422 v -6.44882 h 1.05422 v 2.63775 h 2.97299 v -2.63775 h 1.05863 z"
+         id="path5" />
+    </g>
   </g>
 </svg>
