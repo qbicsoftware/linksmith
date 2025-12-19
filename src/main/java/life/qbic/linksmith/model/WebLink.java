@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import life.qbic.linksmith.core.RfcLinkParameter;
 
 /**
@@ -53,15 +55,21 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
 
 
   public Optional<String> anchor() {
-    return Optional.empty();
+    return findFirstWithFilter(params, WebLink::isAnchorParameter)
+        .map(WebLinkParameter::value);
   }
 
+
   public List<String> hreflang() {
-    return List.of();
+    return params.stream()
+        .filter(WebLink::isHreflangParameter)
+        .map(WebLinkParameter::value)
+        .toList();
   }
 
   public Optional<String> media() {
-    return Optional.empty();
+    return findFirstWithFilter(params, WebLink::isMediaParameter)
+        .map(WebLinkParameter::value);
   }
 
   /**
@@ -78,10 +86,9 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * @return a list of relation parameter values
    */
   public List<String> rel() {
-    return this.params.stream()
-        .filter(param -> param.name().equals("rel"))
+    return findAllWithFilter(params, WebLink::isRelParameter)
         .map(WebLinkParameter::value)
-        .map(value -> value.split("\\s+"))
+        .map(WebLink::splitByWhitespace)
         .flatMap(Arrays::stream)
         .toList();
   }
@@ -106,13 +113,14 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
     return this.params.stream()
         .filter(param -> param.name().equals("rev"))
         .map(WebLinkParameter::value)
-        .map(value -> value.split("\\s+"))
+        .map(WebLink::splitByWhitespace)
         .flatMap(Arrays::stream)
         .toList();
   }
 
   public Optional<String> title() {
-    return Optional.empty();
+   return findFirstWithFilter(params, WebLink::isTitleParameter)
+       .map(WebLinkParameter::value);
   }
 
   public Optional<String> titleMultiple() {
@@ -126,9 +134,29 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    */
   public Optional<String> type() {
     return this.params.stream()
-        .filter(WebLink::hasTypeParameter)
+        .filter(WebLink::isTypeParameter)
         .findFirst()
         .map(WebLinkParameter::value);
+  }
+
+  private static boolean isAnchorParameter(WebLinkParameter param) {
+    return param.name().equals("anchor");
+  }
+
+  private static boolean isHreflangParameter(WebLinkParameter param) {
+    return param.name().equals("hreflang");
+  }
+
+  private static boolean isMediaParameter(WebLinkParameter param) {
+    return param.name().equals("media");
+  }
+
+  private static boolean isRelParameter(WebLinkParameter param) {
+    return param.name().equals("rel");
+  }
+
+  private static boolean isTitleParameter(WebLinkParameter param) {
+    return param.name().equals("title");
   }
 
   /**
@@ -137,8 +165,28 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * @param param the web link parameter to validate
    * @return true, if the parameter name is {@code type}, else returns false
    */
-  private static boolean hasTypeParameter(WebLinkParameter param) {
+  private static boolean isTypeParameter(WebLinkParameter param) {
     return param.name().equals("type");
+  }
+
+  private static String[] splitByWhitespace(String value) {
+    return value.trim().split("\\s+");
+  }
+
+  private static Optional<WebLinkParameter> findFirstWithFilter(
+      List<WebLinkParameter> params,
+      Predicate<WebLinkParameter> filter) {
+    return params.stream()
+        .filter(filter)
+        .findFirst();
+  }
+
+  private static Stream<WebLinkParameter> findAllWithFilter(
+      List<WebLinkParameter> params,
+      Predicate<WebLinkParameter> filter
+  ) {
+    return params.stream()
+        .filter(filter);
   }
 
   public Map<String, List<String>> extensionAttributes() {
