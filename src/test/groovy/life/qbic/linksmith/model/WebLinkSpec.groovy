@@ -1,6 +1,6 @@
 package life.qbic.linksmith.model
 
-import spock.lang.Ignore
+
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -188,7 +188,7 @@ class WebLinkSpec extends Specification {
 
     // --------------------------------------------------------------------------
     // Methods currently returning empty by implementation:
-    // anchor(), hreflang(), media(), title(), titleMultiple()
+    // anchor(), hreflang(), media(), title(), titleEncodings()
     //
     // These tests document the intended view semantics without enforcing RFC rules.
     // They will fail until implemented; keep them as "pending" by ignoring for now.
@@ -247,7 +247,7 @@ class WebLinkSpec extends Specification {
         ))
 
         expect:
-        link.titleMultiple().get() == "UTF-8''first"
+        link.titleEncodings().get() == "UTF-8''first"
     }
 
     // ------------------------------------------------------------------------
