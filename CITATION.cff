@@ -17,11 +17,6 @@ message: >-
 version: "1.0.0-alpha.1"
 date-released: "2025-12-01"
 
-doi: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
-identifiers:
-  - type: doi
-    value: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
-
 repository-code: "https://github.com/qbicsoftware/linksmith"
 url: "https://github.com/qbicsoftware/linksmith"
 license: "AGPL-3.0-only"
@@ -69,7 +64,6 @@ preferred-citation:
       orcid: "https://orcid.org/0000-0002-4375-0691"
       affiliation: "Quantitative Biology Center (QBiC), University of Tübingen"
       affiliation-identifier: "https://ror.org/00v34f693"
-  doi: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
   year: 2025
 
 keywords:
