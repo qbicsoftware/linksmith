@@ -2,7 +2,7 @@ cff-version: 1.2.0
 
 type: software
 
-title: "Linksmith (alpha) — A Java library for HTTP Web Linking (RFC 8288)"
+title: "Linksmith: RFC 8288 HTTP Link header parsing and validation (Java)"
 
 abstract: >-
   Linksmith is a Java library for working with HTTP Web Linking according to
@@ -16,6 +16,11 @@ message: >-
 
 version: "1.0.0-alpha.1"
 date-released: "2025-12-01"
+
+doi: 10.5281/zenodo.18416081
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18416081
 
 repository-code: "https://github.com/qbicsoftware/linksmith"
 url: "https://github.com/qbicsoftware/linksmith"
@@ -64,6 +69,7 @@ preferred-citation:
       orcid: "https://orcid.org/0000-0002-4375-0691"
       affiliation: "Quantitative Biology Center (QBiC), University of Tübingen"
       affiliation-identifier: "https://ror.org/00v34f693"
+  doi: 10.5281/zenodo.18416081
   year: 2025
 
 keywords:
