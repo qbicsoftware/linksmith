@@ -40,7 +40,7 @@ class Rfc8288ValidatorSpec extends Specification {
         WebLinkValidator.ValidationResult result = validator.validate(rawHeader)
 
         then: "no issues are reported"
-        !result.containsIssues()
+        !result.hasIssues()
         !result.report().hasErrors()
         !result.report().hasWarnings()
 
@@ -69,7 +69,7 @@ class Rfc8288ValidatorSpec extends Specification {
         WebLinkValidator.ValidationResult result = validator.validate(rawHeader)
 
         then: "an error is reported"
-        result.containsIssues()
+        result.hasIssues()
         result.report().hasErrors()
 
         and: "no WebLinks are produced for invalid URIs"
@@ -95,7 +95,7 @@ class Rfc8288ValidatorSpec extends Specification {
         WebLinkValidator.ValidationResult result = validator.validate(rawHeader)
 
         then: "at least one error is reported for the invalid entry"
-        result.containsIssues()
+        result.hasIssues()
         result.report().hasErrors()
 
         and: "the valid URI still yields a WebLink"

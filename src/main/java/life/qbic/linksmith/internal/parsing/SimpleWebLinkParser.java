@@ -30,7 +30,7 @@ import life.qbic.linksmith.spi.WebLinkParser;
  * </pre>
  *
  */
-public class SimpleWebLinkParser implements WebLinkParser {
+public final class SimpleWebLinkParser implements WebLinkParser {
 
   private int currentPosition = 0;
 

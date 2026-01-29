@@ -50,7 +50,7 @@ public interface WebLinkValidator {
       weblinks = List.copyOf(weblinks);
     }
 
-    public boolean containsIssues() {
+    public boolean hasIssues() {
       return !report.isEmpty();
     }
   }

@@ -18,6 +18,18 @@
 Linksmith — A Java library for HTTP Web Linking ([RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288))
 </div>
 
+---
+
+## ⚠️ Development Status
+
+This repository is in an **early and experimental stage**.
+
+- APIs may change or be removed without prior notice
+- Documentation may be incomplete or outdated
+- Backward compatibility is **not guaranteed**
+
+Use at your own risk, but provide feedback and suggestions in an issue or contribution in form of a pull-request.
+
 # Why Linksmith?
 
 | Without Linksmith ❌    | With Linksmith ✅       |
@@ -76,7 +88,7 @@ String rawHeader =
 WebLinkProcessor webLinkProcessor = new WebLinkProcessor.Builder().build();
 ValidationResult result = webLinkProcessor.process(rawHeader);
 
-if (result.containsIssues()) {
+if (result.hasIssues()) {
   // Retrieve the report
   var report = result.report();
   // Investigate the report
@@ -96,8 +108,37 @@ This will result in the following printout:
 https://orcid.org/0009-0006-0929-9338  
 https://ror.org/00v34f693
 ```
+---
 
-# Branding and Logo
+## Contributing
+
+Compass is an open-source research software project and welcomes contributions
+from the community.
+
+You can contribute by:
+- reporting bugs or unexpected behavior,
+- improving documentation or examples,
+- proposing new validation rules or features,
+- submitting code improvements or fixes.
+
+Please read the
+[Contribution Guidelines](CONTRIBUTING.md)
+before opening an issue or pull request.
+
+All contributions are reviewed, and design discussions are encouraged —
+especially for changes affecting validation semantics or public APIs.
+
+## Acknowledgements
+
+Compass implements the community standards behind Web Linking.
+- RFC 8288 — Web Linking: https://datatracker.ietf.org/doc/html/rfc8288
+
+We thank the authors and contributors of these specifications for their work.
+Linksmith is an independent implementation and is not affiliated with or endorsed by the specification authors.
+
+---
+
+## Branding and Logo
 
 The Linksmith name and logo are **not covered by the AGPL-3.0 license**.
 

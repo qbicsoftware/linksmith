@@ -28,7 +28,7 @@ import life.qbic.linksmith.internal.parsing.RawParam;
  * but it is advised to investigate any findings.
  *
  */
-public class Rfc8288WebLinkValidator implements WebLinkValidator {
+public final class Rfc8288WebLinkValidator implements WebLinkValidator {
 
   // Defined in https://www.rfc-editor.org/rfc/rfc7230, section 3.2.6
   private static final Pattern ALLOWED_TOKEN_CHARS = Pattern.compile(

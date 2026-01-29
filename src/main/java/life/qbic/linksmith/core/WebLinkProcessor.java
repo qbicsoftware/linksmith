@@ -20,7 +20,7 @@ import life.qbic.linksmith.internal.parsing.SimpleWebLinkParser;
  * The underlying standard is RFC 8288
  *
  */
-public class WebLinkProcessor {
+public final class WebLinkProcessor {
 
   private final WebLinkLexer lexer;
   private final WebLinkParser parser;

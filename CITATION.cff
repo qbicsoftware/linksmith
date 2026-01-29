@@ -1,18 +1,79 @@
 cff-version: 1.2.0
+
+type: software
+
+title: "Linksmith (alpha) — A Java library for HTTP Web Linking (RFC 8288)"
+
+abstract: >-
+  Linksmith is a Java library for working with HTTP Web Linking according to
+  RFC 8288. It provides in-memory parsing and modeling support for Web Links,
+  intended to integrate with existing HTTP and metadata processing pipelines.
+
 message: >-
   This software is currently in ALPHA. It is shared for testing and feedback only.
   Please do not cite this version in scholarly publications.
   A citable release will be provided once the software reaches beta or stable.
 
-title: "Linksmith (alpha) — A Java library for HTTP Web Linking (RFC 8288)"
 version: "1.0.0-alpha.1"
 date-released: "2025-12-01"
+
+doi: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
+
+repository-code: "https://github.com/qbicsoftware/linksmith"
+url: "https://github.com/qbicsoftware/linksmith"
+license: "AGPL-3.0-only"
 
 authors:
   - family-names: Fillinger
     given-names: Sven
     orcid: "https://orcid.org/0000-0001-8835-2219"
     affiliation: "University of Tübingen"
+ - family-names: Nahnsen
+    given-names: Sven
+    orcid: "https://orcid.org/0000-0002-4375-0691"
+    affiliation: "Quantitative Biology Center (QBiC), University of Tübingen"
 
-repository-code: "https://github.com/qbicsoftware/linksmith"
-license: "AGPL-3.0-only"
+contributors:
+  - family-names: Fillinger
+    given-names: Sven
+    orcid: "https://orcid.org/0000-0001-8835-2219"
+    affiliation: "University of Tübingen"
+    roles:
+      - conceptualization
+      - validation
+      - maintenance
+ - family-names: Nahnsen
+    given-names: Sven
+    orcid: "https://orcid.org/0000-0002-4375-0691"
+    affiliation: "Quantitative Biology Center (QBiC), University of Tübingen"
+    roles:
+      - supervision
+      - resources
+
+preferred-citation:
+  type: software
+  title: "Linksmith — A Java library for HTTP Web Linking (RFC 8288)"
+  version: "1.0.0-alpha.1"
+  date-released: "2025-12-01"
+  authors:
+    - family-names: Fillinger
+      given-names: Sven
+      orcid: "https://orcid.org/0000-0001-8835-2219"
+      affiliation: "University of Tübingen"
+      affiliation-identifier: "https://ror.org/00v34f693"
+    - family-names: Nahnsen
+      given-names: Sven
+      orcid: "https://orcid.org/0000-0002-4375-0691"
+      affiliation: "Quantitative Biology Center (QBiC), University of Tübingen"
+      affiliation-identifier: "https://ror.org/00v34f693"
+  doi: 10.5281/zenodo.<REPLACE_WITH_LINKSMITH_RECORD_ID>
+  year: 2025
+
+keywords:
+  - Web Linking
+  - RFC 8288
+  - HTTP Link header
+  - Java
