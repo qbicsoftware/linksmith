@@ -1,7 +1,7 @@
 name: Feature Request
 description: File a feature request.
 title: "[Please create a short, descriptive title]"
-labels: ["wanted"]
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
