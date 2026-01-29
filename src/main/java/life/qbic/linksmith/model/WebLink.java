@@ -1,7 +1,9 @@
 package life.qbic.linksmith.model;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -87,9 +89,9 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
   /**
    * Returns the {@code anchor} parameter value of this link, if present.
    * <p>
-   * The {@code anchor} parameter expresses the link context (origin) explicitly as defined in
-   * RFC 8288 ("Link Context"). If multiple {@code anchor} parameters are present, this method
-   * returns the first one encountered in {@link #params()}.
+   * The {@code anchor} parameter expresses the link context (origin) explicitly as defined in RFC
+   * 8288 ("Link Context"). If multiple {@code anchor} parameters are present, this method returns
+   * the first one encountered in {@link #params()}.
    *
    * @return the first {@code anchor} parameter value, or {@link Optional#empty()} if absent
    */
@@ -131,8 +133,8 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
   /**
    * Returns all relation types conveyed by the {@code rel} parameter(s).
    * <p>
-   * In RFC 8288, the relation type of a link is conveyed via the {@code rel} parameter.
-   * The value of {@code rel} is a whitespace-separated list of relation types:
+   * In RFC 8288, the relation type of a link is conveyed via the {@code rel} parameter. The value
+   * of {@code rel} is a whitespace-separated list of relation types:
    * <pre>{@code
    * relation-type *( 1*SP relation-type )
    * }</pre>
@@ -157,11 +159,11 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * Returns all reverse relation types conveyed by the {@code rev} parameter(s).
    * <p>
    * The {@code rev} parameter is defined in RFC 8288 in relation to {@code rel} and conveys reverse
-   * relation types. This method mirrors the {@link #rel()} behavior:
-   * it splits each {@code rev} parameter value by one or more whitespace characters and returns the
-   * flattened result.
+   * relation types. This method mirrors the {@link #rel()} behavior: it splits each {@code rev}
+   * parameter value by one or more whitespace characters and returns the flattened result.
    *
-   * @return a list of reverse relation types derived from {@code rev} values, or an empty list if absent
+   * @return a list of reverse relation types derived from {@code rev} values, or an empty list if
+   * absent
    */
   public List<String> rev() {
     return this.params.stream()
@@ -171,6 +173,7 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
         .flatMap(Arrays::stream)
         .toList();
   }
+
   /**
    * Returns the {@code title} parameter value of this link, if present.
    * <p>
@@ -181,16 +184,16 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * @return the first {@code title} value, or {@link Optional#empty()} if absent
    */
   public Optional<String> title() {
-   return findFirstWithFilter(params, WebLink::isTitleParameter)
-       .map(WebLinkParameter::value);
+    return findFirstWithFilter(params, WebLink::isTitleParameter)
+        .map(WebLinkParameter::value);
   }
 
   /**
    * Returns the {@code title*} parameter value of this link, if present.
    * <p>
    * The {@code title*} target attribute is the extended form of {@code title} and allows character
-   * set and language encoding as referenced by RFC 8288 (via RFC 5987).
-   * If multiple {@code title*} parameters are present, this method returns the first one encountered.
+   * set and language encoding as referenced by RFC 8288 (via RFC 5987). If multiple {@code title*}
+   * parameters are present, this method returns the first one encountered.
    * <p>
    * Note: this method returns the raw serialized value as found in {@link #params()} without
    * decoding.
@@ -305,8 +308,8 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
   /**
    * Finds the first parameter in the given list that matches the provided predicate.
    *
-   * @param params  the parameter list to search
-   * @param filter  predicate selecting the desired parameter(s)
+   * @param params the parameter list to search
+   * @param filter predicate selecting the desired parameter(s)
    * @return the first matching parameter, or {@link Optional#empty()} if none match
    */
   private static Optional<WebLinkParameter> findFirstWithFilter(
@@ -320,8 +323,8 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
   /**
    * Returns a stream over all parameters in the given list that match the provided predicate.
    *
-   * @param params  the parameter list to search
-   * @param filter  predicate selecting the desired parameter(s)
+   * @param params the parameter list to search
+   * @param filter predicate selecting the desired parameter(s)
    * @return a stream of all matching parameters (possibly empty)
    */
   private static Stream<WebLinkParameter> findAllWithFilter(
@@ -365,5 +368,23 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    */
   public List<String> extensionAttribute(String name) {
     return extensionAttributes().getOrDefault(name, List.of());
+  }
+
+  public Map<RfcLinkParameter, List<WebLinkParameter>> rfcParameters() {
+    var rfcMap = new EnumMap<RfcLinkParameter, List<WebLinkParameter>>(RfcLinkParameter.class);
+    for (var linkParameter : params()) {
+      var rfcLookup = RfcLinkParameter.from(linkParameter.name());
+      rfcLookup.ifPresent(
+          rfcParameter -> rfcMap.computeIfAbsent(rfcParameter, k -> new ArrayList<>())
+              .add(linkParameter));
+    }
+    return rfcMap;
+  }
+
+  public List<WebLinkParameter> rfcParameter(RfcLinkParameter parameter) {
+    Objects.requireNonNull(parameter);
+    return this.params.stream()
+        .filter(linkParameter -> Objects.equals(linkParameter.name(), parameter.rfcValue()))
+        .toList();
   }
 }

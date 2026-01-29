@@ -1,6 +1,7 @@
 package life.qbic.linksmith.model
 
 
+import life.qbic.linksmith.core.RfcLinkParameter
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -17,6 +18,100 @@ class WebLinkSpec extends Specification {
         optionalType.isPresent()
         optionalType.get() == "text/plain"
 
+    }
+
+    // --------------------------------------------------------------------------
+    // rfcParameters() / rfcParameter(): grouping behavior
+    // - groups params whose names are defined by RfcLinkParameter
+    // - preserves encounter order within each group
+    // - excludes extension parameters
+    // --------------------------------------------------------------------------
+
+    def "rfcParameters: returns empty map when no RFC parameters are present"() {
+        given:
+        def link = weblink(uri("https://example.org/target"), List.of(
+                parameter("x-flag", "a"),
+                parameter("profile", "https://example.org/p1")
+        ))
+
+        expect:
+        link.rfcParameters().isEmpty()
+    }
+
+    def "rfcParameters: groups RFC parameters by enum key and preserves encounter order per key"() {
+        given:
+        def rel1 = parameter("rel", "self")
+        def rel2 = parameter("rel", "next")
+        def type1 = parameter("type", "application/json")
+        def ext = parameter("x-flag", "a")
+
+        and:
+        def link = weblink(uri("https://example.org/target"), List.of(rel1, ext, type1, rel2))
+
+        when:
+        def grouped = link.rfcParameters()
+
+        then:
+        grouped.keySet().containsAll([RfcLinkParameter.REL, RfcLinkParameter.TYPE] as Set)
+        !grouped.keySet().contains(null)
+
+        and: "extension parameters are excluded"
+        !grouped.values().flatten().contains(ext)
+
+        and: "encounter order is preserved within each RFC parameter group"
+        grouped[RfcLinkParameter.REL] == [rel1, rel2]
+        grouped[RfcLinkParameter.TYPE] == [type1]
+    }
+
+    def "rfcParameters: supports RFC parameters with special names (e.g. title*)"() {
+        given:
+        def titleStar1 = parameter("title*", "UTF-8''first")
+        def titleStar2 = parameter("title*", "UTF-8''second")
+        def title = parameter("title", "plain")
+        def link = weblink(uri("https://example.org/target"), List.of(titleStar1, title, titleStar2))
+
+        when:
+        def grouped = link.rfcParameters()
+
+        then:
+        grouped[RfcLinkParameter.TITLE_MULT] == [titleStar1, titleStar2]
+        grouped[RfcLinkParameter.TITLE] == [title]
+    }
+
+    def "rfcParameter: returns empty list when the RFC parameter is absent"() {
+        given:
+        def link = weblink(uri("https://example.org/target"), List.of(
+                parameter("x-flag", "a"),
+                parameter("profile", "https://example.org/p1")
+        ))
+
+        expect:
+        link.rfcParameter(RfcLinkParameter.REL) == []
+    }
+
+    def "rfcParameter: returns all raw parameters for a given RFC parameter type in encounter order"() {
+        given:
+        def rel1 = parameter("rel", "self")
+        def rel2 = parameter("rel", "next")
+        def link = weblink(uri("https://example.org/target"), List.of(
+                rel1,
+                parameter("x-ignored", "1"),
+                rel2
+        ))
+
+        expect:
+        link.rfcParameter(RfcLinkParameter.REL) == [rel1, rel2]
+    }
+
+    def "rfcParameter: throws NullPointerException when called with null"() {
+        given:
+        def link = weblink(uri("https://example.org/target"), List.of())
+
+        when:
+        link.rfcParameter(null)
+
+        then:
+        thrown(NullPointerException)
     }
 
     // --------------------------------------------------------------------------
