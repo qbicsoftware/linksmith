@@ -15,7 +15,8 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=qbicsoftware_linksmith&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=qbicsoftware_linksmith)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=qbicsoftware_linksmith&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=qbicsoftware_linksmith)
 
-Linksmith — A Java library for HTTP Web Linking ([RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288))
+A Java library to parse and validate HTTP Link headers according to [RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288) -   
+turning raw header values into a usable in-memory model.
 </div>
 
 ---
