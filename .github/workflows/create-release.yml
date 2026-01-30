@@ -8,7 +8,7 @@ on:
         required: true
 permissions:
   id-token: write # This is required for requesting the JWT
-  contents: read # This is required for actions/checkout
+  contents: write # This is required for actions/checkout
   attestations: write   # required for provenance
 jobs:
   release:
@@ -42,7 +42,54 @@ jobs:
         run: mvn versions:set -DnewVersion=${{ github.event.inputs.versionTag }} -DprocessAllModules
 
       - name: Build with Maven
-        run: mvn -B package -Prelease --file pom.xml
+        run: mvn -B verify -Prelease --file pom.xml
+
+      # Generate provenance (SLSA attestation) for all JARs
+      - name: Generate SLSA build provenance
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: "**/target/*.jar"
+
+      - name: Publish artefact to Maven Central
+        run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml -Prelease -DskipTests deploy
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
+          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
+
+      - name: Update CITATION.cff (version + date)
+        run: |
+          VERSION="${{ github.event.inputs.versionTag }}"
+          DATE="$(date -u +%Y-%m-%d)"
+          
+          # top-level fields
+          sed -i "s/^version: .*/version: \"${VERSION}\"/" CITATION.cff
+          sed -i "s/^date-released: .*/date-released: \"${DATE}\"/" CITATION.cff
+          
+          # preferred-citation fields (only if present)
+          sed -i "s/^\(\s*version:\) .*/\1 \"${VERSION}\"/" CITATION.cff
+          
+          echo "Updated CITATION.cff to version=${VERSION}, date-released=${DATE}"
+
+      - name: Commit release metadata (pom.xml + CITATION.cff)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add pom.xml */pom.xml CITATION.cff || true
+          
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Release ${{ github.event.inputs.versionTag }}"
+            git push origin HEAD:main
+          fi
+
+      - name: Create and push git tag
+        run: |
+          TAG="${{ github.event.inputs.versionTag }}"
+          git tag -a "${TAG}" -m "Release ${TAG}"
+          git push origin "${TAG}"
 
       - name: Create Release Notes
         if: ${{ !startsWith(github.ref, 'refs/tags/')
@@ -73,16 +120,4 @@ jobs:
               prerelease: true
             });
 
-      # Generate provenance (SLSA attestation) for all JARs
-      - name: Generate SLSA build provenance
-        uses: actions/attest-build-provenance@v3
-        with:
-          subject-path: "**/target/*.jar"
-
-      - name: Publish artefact to Maven Central
-        run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml -Prelease -DskipTests deploy
-        env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
-          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
-
+  

@@ -55,7 +55,7 @@ contributors:
 
 preferred-citation:
   type: software
-  title: "Linksmith — A Java library for HTTP Web Linking (RFC 8288)"
+  title: "Linksmith: RFC 8288 HTTP Link header parsing and validation (Java)"
   version: "1.0.0-alpha.1"
   date-released: "2025-12-01"
   authors:
