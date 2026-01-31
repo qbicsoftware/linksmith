@@ -6,8 +6,6 @@ fail-on-severity: high
 # Possible values: Any SPDX-compliant license identifiers or expressions from https://spdx.org/licenses/
 allow-licenses:
   - AGPL-3.0-or-later
-  - BSD-3-Clause
-  -
   # ([String]). Skip these GitHub Advisory Database IDs during detection (optional)
   # Possible values: Any valid GitHub Advisory Database ID from https://github.com/advisories
 allow-ghsas:

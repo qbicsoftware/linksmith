@@ -42,6 +42,7 @@
     <spock.version>2.4-M7-groovy-5.0</spock.version>
     <gmavenplus.version>4.2.1</gmavenplus.version>
     <slf4j.version>2.0.17</slf4j.version>
+    <cyclonedx.version>2.9.1</cyclonedx.version>
   </properties>
 
   <dependencies>
@@ -120,29 +121,7 @@
           </includes>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.2.8</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <gpgArguments>
-            <arg>--pinentry-mode</arg>
-            <arg>loopback</arg>
-          </gpgArguments>
 
-          <!-- We pass this in via a property (local or CI) -->
-          <passphrase>${gpg.passphrase}</passphrase>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -178,6 +157,54 @@
         <!-- this is what the plugin reads -->
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+              <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.6.1</version>
+            <executions>
+              <execution>
+                <id>attach-sbom</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>attach-artifact</goal>
+                </goals>
+                <configuration>
+                  <artifacts>
+                    <artifact>
+                      <file>${project.build.directory}/${project.artifactId}-${project.version}-sbom.json</file>
+                      <type>json</type>
+                      <classifier>sbom</classifier>
+                    </artifact>
+                  </artifacts>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <profile>
       <id>sigcheck</id>
@@ -213,13 +240,12 @@
             <groupId>org.simplify4u.plugins</groupId>
             <artifactId>pgpverify-maven-plugin</artifactId>
             <executions>
-              <!-- bind early so you fail fast -->
               <execution>
                 <id>pgp-verify</id>
+                <phase>validate</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
-                <phase>validate</phase>
               </execution>
             </executions>
             <configuration>
@@ -240,43 +266,6 @@
               <!-- write a JSON report (optional) -->
               <reportWrite>true</reportWrite>
             </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.cyclonedx</groupId>
-            <artifactId>cyclonedx-maven-plugin</artifactId>
-            <version>2.9.1</version>
-            <executions>
-              <!-- Top-level aggregate SBOM covering all modules -->
-              <execution>
-                <id>aggregate-bom</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>makeAggregateBom</goal>
-                </goals>
-                <configuration>
-                  <schemaVersion>1.5</schemaVersion>
-                  <outputFormat>json</outputFormat>   <!-- produces .json -->
-                  <outputName>${project.artifactId}-${project.version}-sbom</outputName>
-                  <includeBomSerialNumber>true</includeBomSerialNumber>
-                  <includeLicenseText>true</includeLicenseText>
-                </configuration>
-              </execution>
-
-              <!-- (Optional) Per-module SBOMs; keep if you also want one per JAR -->
-              <execution>
-                <id>module-bom</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>makeAggregateBom</goal>
-                </goals>
-                <configuration>
-                  <schemaVersion>1.5</schemaVersion>
-                  <outputFormat>json</outputFormat>
-                  <includeBomSerialNumber>true</includeBomSerialNumber>
-                  <includeLicenseText>true</includeLicenseText>
-                </configuration>
-              </execution>
-            </executions>
           </plugin>
 
           <plugin>
@@ -343,6 +332,39 @@
               <checksums>required</checksums>
               <autoPublish>true</autoPublish>
             </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>sbom</id>
+      <properties>
+        <!-- Ensure CycloneDX does not skip SBOM generation due to deploy being skipped elsewhere -->
+        <maven.deploy.skip>false</maven.deploy.skip>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.cyclonedx</groupId>
+            <artifactId>cyclonedx-maven-plugin</artifactId>
+            <version>${cyclonedx.version}</version>
+            <executions>
+              <execution>
+                <id>generate-sbom</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>makeAggregateBom</goal>
+                </goals>
+                <configuration>
+                  <schemaVersion>1.5</schemaVersion>
+                  <outputFormat>json</outputFormat>
+                  <outputName>${project.artifactId}-${project.version}-sbom</outputName>
+                  <includeBomSerialNumber>true</includeBomSerialNumber>
+                  <includeLicenseText>true</includeLicenseText>
+                  <skipNotDeployed>false</skipNotDeployed>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>

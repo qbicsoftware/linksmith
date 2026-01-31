@@ -111,6 +111,51 @@ https://ror.org/00v34f693
 ```
 ---
 
+## Release signing key (PGP)
+
+To verify signed release artifacts published for this project (e.g. `*.asc` signatures), use the maintainer’s PGP public key fingerprint:
+
+- **Fingerprint:** `701E 55A5 3145 5675 7C7D  3ABC C556 6B35 2DF7 E74D`
+
+You can verify that an imported key matches this fingerprint:
+
+```bash
+gpg --list-keys --fingerprint
+```
+
+Then verify a downloaded signature (example):
+
+```bash
+bash gpg --verify <artifact>.asc
+```
+
+You should see something like
+
+```bash
+gpg: assuming signed data in 'linksmith-1.0.0-alpha.6-javadoc.jar'
+gpg: Signature made Thu 29 Jan 15:18:19 2026 CET
+gpg:                using RSA key 701E55A5314556757C7D3ABCC5566B352DF7E74D
+gpg: Good signature from "Sven Fillinger <sven.fillinger@uni-tuebingen.de>" [ultimate]
+```
+
+and to check the fingerprint:
+
+```bash
+gpg --fingerprint 701E55A5314556757C7D3ABCC5566B352DF7E74D
+```
+
+which gives:
+
+
+```bash
+pub   rsa4096 2025-12-01 [SC] [expires: 2027-12-01]
+      701E 55A5 3145 5675 7C7D  3ABC C556 6B35 2DF7 E74D
+uid           [ultimate] Sven Fillinger <sven.fillinger@uni-tuebingen.de>
+sub   rsa4096 2025-12-01 [E] [expires: 2027-12-01]
+```
+
+---
+
 ## Contributing
 
 Compass is an open-source research software project and welcomes contributions
