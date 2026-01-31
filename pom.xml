@@ -120,29 +120,7 @@
           </includes>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.2.8</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <gpgArguments>
-            <arg>--pinentry-mode</arg>
-            <arg>loopback</arg>
-          </gpgArguments>
 
-          <!-- We pass this in via a property (local or CI) -->
-          <passphrase>${gpg.passphrase}</passphrase>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -178,6 +156,32 @@
         <!-- this is what the plugin reads -->
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
+      <build>
+        <plugins>
+          <!-- Sign *your* artifacts only during release -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+              <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <profile>
       <id>sigcheck</id>
@@ -213,13 +217,12 @@
             <groupId>org.simplify4u.plugins</groupId>
             <artifactId>pgpverify-maven-plugin</artifactId>
             <executions>
-              <!-- bind early so you fail fast -->
               <execution>
                 <id>pgp-verify</id>
+                <phase>validate</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
-                <phase>validate</phase>
               </execution>
             </executions>
             <configuration>
