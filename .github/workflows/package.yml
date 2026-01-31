@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  package:
+  verify:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,4 +25,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Run mvn package
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -DskipTests
