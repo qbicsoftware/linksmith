@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -348,13 +349,16 @@ public record WebLink(URI target, List<WebLinkParameter> params) {
    * @return a map of extension attribute names to lists of their values (possibly empty)
    */
   public Map<String, List<String>> extensionAttributes() {
-    Set<String> rfcParameterNames = Arrays.stream(RfcLinkParameter.values())
-        .map(RfcLinkParameter::rfcValue)
-        .collect(Collectors.toSet());
+    return extensionParameters().entrySet().stream()
+        .collect(Collectors.toMap(
+            Map.Entry::getKey,
+            e -> e.getValue().stream().map(WebLinkParameter::name).toList()));
+  }
+
+  public Map<String, List<WebLinkParameter>> extensionParameters() {
     return this.params.stream()
-        .filter(param -> !rfcParameterNames.contains(param.name()))
-        .collect(Collectors.groupingBy(WebLinkParameter::name,
-            Collectors.mapping(WebLinkParameter::value, Collectors.toList())));
+        .filter(param -> RfcLinkParameter.from(param.name()).isEmpty())
+        .collect(Collectors.groupingBy(WebLinkParameter::name, Collectors.toList()));
   }
 
   /**

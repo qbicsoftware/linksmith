@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 import life.qbic.linksmith.model.WebLink;
 import life.qbic.linksmith.model.WebLinkParameter;
 import life.qbic.linksmith.spi.WebLinkValidator;
@@ -29,10 +28,6 @@ import life.qbic.linksmith.internal.parsing.RawParam;
  *
  */
 public final class Rfc8288WebLinkValidator implements WebLinkValidator {
-
-  // Defined in https://www.rfc-editor.org/rfc/rfc7230, section 3.2.6
-  private static final Pattern ALLOWED_TOKEN_CHARS = Pattern.compile(
-      "^[!#$%&'*+-.^_`|~0-9A-Za-z]+$");
 
   private Rfc8288WebLinkValidator() {}
 
@@ -115,24 +110,11 @@ public final class Rfc8288WebLinkValidator implements WebLinkValidator {
    * @param recordedIssues a list of issues to record more findings
    */
   private void validateParam(RawParam rawParam, List<Issue> recordedIssues) {
-    if (tokenContainsInvalidChars(rawParam.name())) {
+    if (!Rfc7230Tokens.isToken(rawParam.name())) {
       recordedIssues.add(
-          Issue.error("Invalid parameter name '%s': Only the characters '%s' are allowed".formatted(
-              rawParam.name(), ALLOWED_TOKEN_CHARS.pattern())));
+          Issue.error("Invalid parameter name '%s'. Only tokens are allowed (RFC 7230)".formatted(
+              rawParam.name())));
     }
-  }
-
-  /**
-   * Looks for the presence of invalid chars.
-   * <p>
-   * Allowed token chars are defined by <a href="https://www.rfc-editor.org/rfc/rfc7230">RFC
-   * 7230</a>, section 3.2.6.
-   *
-   * @param token the token to be checked for invalid characters
-   * @return true, if the token violates the token character specification, else false
-   */
-  private static boolean tokenContainsInvalidChars(String token) {
-    return !ALLOWED_TOKEN_CHARS.matcher(token).matches();
   }
 
   /**

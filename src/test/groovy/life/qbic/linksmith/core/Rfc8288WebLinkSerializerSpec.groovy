@@ -38,7 +38,7 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
     )
 
     expect:
-    serializer.serialize(link) == '<https://example.org/resource>; title=""'
+    serializer.serialize(link) == '<https://example.org/resource> ; title=""'
   }
 
   def "serialize: token value can be emitted unquoted (e.g. rel=self)"() {
@@ -48,7 +48,7 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
     )
 
     expect:
-    serializer.serialize(link) == "<https://example.org/resource>; rel=self"
+    serializer.serialize(link) == "<https://example.org/resource> ; rel=self"
   }
 
   def "serialize: values with whitespace must be quoted (e.g. rel='self item')"() {
@@ -58,7 +58,7 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
     )
 
     expect:
-    serializer.serialize(link) == '<https://example.org/resource>; rel="self item"'
+    serializer.serialize(link) == '<https://example.org/resource> ; rel="self item"'
   }
 
   def "serializeAll: multiple links are comma-separated and deterministic"() {
@@ -120,15 +120,15 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
     then: "everything is serialized (RFC + extension)"
     out.startsWith("<https://example.org/resource>")
     out.contains("rel=self")
-    out.contains("type=application/json")
-    out.contains("title*=UTF-8''first UTF-8''second")
-    out.contains("profile=https://example.org/profile")
+    out.contains("type=\"application/json\"")
+    out.contains("title*=\"UTF-8''first UTF-8''second\"")
+    out.contains("profile=\"https://example.org/profile\"")
     out.contains("x-flag=1")
 
     and: "RFC params come before extension params"
-    out.indexOf("rel=self") < out.indexOf("profile=https://example.org/profile")
-    out.indexOf("type=application/json") < out.indexOf("x-flag=1")
-    out.indexOf("title*=UTF-8''first UTF-8''second") < out.indexOf("profile=https://example.org/profile")
+    out.indexOf("rel=self") < out.indexOf("profile=\"https://example.org/profile\"")
+    out.indexOf("type=\"application/json\"") < out.indexOf("x-flag=1")
+    out.indexOf("title*=UTF-8''first UTF-8''second") < out.indexOf("profile=\"https://example.org/profile\"")
   }
 
   def "serialize: look-alike names are treated as extension parameters and appear after RFC parameters"() {
