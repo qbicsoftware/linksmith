@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import life.qbic.linksmith.core.WebLinkProcessor.Builder;
 import life.qbic.linksmith.model.WebLink;
 import life.qbic.linksmith.model.WebLinkParameter;
 import life.qbic.linksmith.spi.WebLinkSerializer;
@@ -50,7 +49,7 @@ public class Rfc8288WebLinkSerializer implements WebLinkSerializer {
       serializeRfcParameter(entry.getKey(), entry.getValue(), builder);
     }
 
-    for (var entry :webLink.extensionParameters().entrySet()) {
+    for (var entry : webLink.extensionParameters().entrySet()) {
       builder.append(" ; ");
       serializeTargetAttribute(entry.getKey(), entry.getValue(), builder);
     }
@@ -71,7 +70,8 @@ public class Rfc8288WebLinkSerializer implements WebLinkSerializer {
     builder.append("<").append(targetValue).append(">");
   }
 
-  private static void serializeTargetAttribute(String attributeName, List<WebLinkParameter> attributes, StringBuilder builder) {
+  private static void serializeTargetAttribute(String attributeName,
+      List<WebLinkParameter> attributes, StringBuilder builder) {
     Objects.requireNonNull(attributeName);
     Objects.requireNonNull(attributes);
 
@@ -116,16 +116,36 @@ public class Rfc8288WebLinkSerializer implements WebLinkSerializer {
     if (value == null) {
       throw new SerializationException("Invalid parameter value: null");
     }
+
+    containsCrLfOrThrow(value);
+    containsNulOrThrow(value);
+
     builder.append(name);
     builder.append("=");
     builder.append(applyQuotingRules(value));
   }
 
+  private static void containsCrLfOrThrow(String value) throws SerializationException {
+    Objects.requireNonNull(value);
+    if (value.contains("\r") || value.contains("\n")) {
+      throw new SerializationException(
+          "Invalid character sequence. Found CR or LF sequence");
+    }
+  }
+
+  private static void containsNulOrThrow(String value) throws SerializationException {
+    Objects.requireNonNull(value);
+    if (value.contains("\u0000")) {
+      throw  new SerializationException(
+          "Invalid character sequence. Found NUL sequence");
+    }
+  }
+
   private static String applyQuotingRules(String value) {
     if (value.isBlank()) {
-     return surroundWithQuotes(value);
+      return surroundWithQuotes(value);
     }
-    if (Rfc7230Tokens.isToken(value)){
+    if (Rfc7230Tokens.isToken(value)) {
       return value;
     }
     return surroundWithQuotes(value);
