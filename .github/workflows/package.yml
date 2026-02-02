@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  verify:
+  package:
     runs-on: ubuntu-latest
 
     steps:
