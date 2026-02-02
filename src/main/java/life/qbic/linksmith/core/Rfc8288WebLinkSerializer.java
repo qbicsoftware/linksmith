@@ -61,7 +61,7 @@ import life.qbic.linksmith.spi.WebLinkSerializer;
  * @since 1.0.0
  * @author Sven Fillinger
  */
-public class Rfc8288WebLinkSerializer implements WebLinkSerializer {
+final class Rfc8288WebLinkSerializer implements WebLinkSerializer {
 
   @Override
   public String serialize(WebLink webLink) throws SerializationException {

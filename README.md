@@ -129,19 +129,21 @@ It produces deterministic/canonical output:
 - safe quoting and escaping for quoted-string values
 
 ```java
+import life.qbic.linksmith.core.WebLinkSerializers;
+
 public class SerializeExample {
 
   public static void main(String[] args) {
     WebLink link = WebLink.create(
-        URI.create("https://example.org/resource"),
-        List.of(
-            WebLinkParameter.create("rel", "self"),
-            WebLinkParameter.create("type", "application/json"),
-            WebLinkParameter.create("title", "My \"quoted\" title")
-        )
+            URI.create("https://example.org/resource"),
+            List.of(
+                    WebLinkParameter.create("rel", "self"),
+                    WebLinkParameter.create("type", "application/json"),
+                    WebLinkParameter.create("title", "My \"quoted\" title")
+            )
     );
 
-    WebLinkSerializer serializer = new Rfc8288WebLinkSerializer();
+    WebLinkSerializer serializer = WebLinkSerializers.rfc8288();
     String headerValue = serializer.serialize(link);
 
     System.out.println(headerValue);
