@@ -43,6 +43,16 @@ Use at your own risk, but provide feedback and suggestions in an issue or contri
 
 Linksmith replaces ad-hoc parsing of HTTP Link headers with a stable, configurable, standards-compliant WebLink API.
 
+## Core features (overview)
+
+Linksmith provides a small set of composable building blocks:
+
+- **Lexing & parsing** of HTTP `Link` header field values (RFC 8288 wire format) into a structured representation
+- **Validation** against RFC 8288 semantics, producing an issue report (warnings + errors)
+- **Serialization** of `WebLink` objects back into RFC 8288 wire format with a **canonical, deterministic output**
+  (stable whitespace, stable parameter ordering, safe quoting/escaping)
+
+
 # Quick start
 
 ## Resolve dependency
@@ -108,6 +118,36 @@ This will result in the following printout:
 // The expected printout of the previous code example
 https://orcid.org/0009-0006-0929-9338  
 https://ror.org/00v34f693
+```
+
+## Example: serialize WebLink objects (canonical RFC 8288 output)
+
+The serializer converts a `WebLink` (in-memory model) back into the RFC 8288 HTTP header format.
+It produces deterministic/canonical output:
+- stable whitespace (`" ; "` between params, `" , "` between links)
+- RFC parameters first, extension parameters after
+- safe quoting and escaping for quoted-string values
+
+```java
+public class SerializeExample {
+
+  public static void main(String[] args) {
+    WebLink link = WebLink.create(
+        URI.create("https://example.org/resource"),
+        List.of(
+            WebLinkParameter.create("rel", "self"),
+            WebLinkParameter.create("type", "application/json"),
+            WebLinkParameter.create("title", "My \"quoted\" title")
+        )
+    );
+
+    WebLinkSerializer serializer = new Rfc8288WebLinkSerializer();
+    String headerValue = serializer.serialize(link);
+
+    System.out.println(headerValue);
+    // <https://example.org/resource> ; rel=self ; type="application/json" ; title="My \"quoted\" title"
+  }
+}
 ```
 ---
 
