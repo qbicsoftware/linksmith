@@ -5,9 +5,12 @@
   <img src="docs/assets/logo/linksmith-logo-dark.svg#gh-dark-mode-only" alt="Linksmith logo" width="200">
 </p>
 
-[![Build Maven Package](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/build_package.yml)
-[![Run Maven Tests](https://github.com/qbicsoftware/linksmith/actions/workflows/run_tests.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/run_tests.yml)
-[![CodeQL](https://github.com/qbicsoftware/linksmith/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/codeql-analysis.yml)
+A Java library to parse, validate and serializes HTTP Link headers according to [RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288) -   
+turning raw header values into a usable in-memory model.
+
+[![Build Maven Package](https://github.com/qbicsoftware/linksmith/actions/workflows/package.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/package.yml)
+[![Run Maven Tests](https://github.com/qbicsoftware/linksmith/actions/workflows/test.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/test.yml)
+[![CodeQL](https://github.com/qbicsoftware/linksmith/actions/workflows/codeql.yml/badge.svg)](https://github.com/qbicsoftware/linksmith/actions/workflows/codeql.yml)
 [![release](https://img.shields.io/github/v/release/qbicsoftware/linksmith?include_prereleases)](https://github.com/qbicsoftware/linksmith/releases)
 [![license](https://img.shields.io/github/license/qbicsoftware/linksmith)](https://github.com/qbicsoftware/linksmith/blob/main/LICENSE)
 
@@ -15,8 +18,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=qbicsoftware_linksmith&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=qbicsoftware_linksmith)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=qbicsoftware_linksmith&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=qbicsoftware_linksmith)
 
-A Java library to parse and validate HTTP Link headers according to [RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288) -   
-turning raw header values into a usable in-memory model.
+
 </div>
 
 ---
