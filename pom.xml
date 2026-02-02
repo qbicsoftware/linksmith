@@ -155,7 +155,7 @@
       <id>release</id>
       <properties>
         <!-- this is what the plugin reads -->
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+        <gpg.passphrase>${env.MAVEN_GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
       <build>
         <plugins>
