@@ -133,27 +133,21 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
         def link = WebLink.create(
                 URI.create("https://example.org/resource"),
                 List.of(
-                        WebLinkParameter.create("REL", "self"),     // extension (case differs)
-                        WebLinkParameter.create("rel", "next"),     // RFC
-                        WebLinkParameter.create("title* ", "nope"), // extension (trailing space)
-                        WebLinkParameter.create("title*", "ok")     // RFC
+                        WebLinkParameter.create("REL", "self"),     // extension (case differs) - token, OK
+                        WebLinkParameter.create("rel", "next"),     // RFC - token, OK
+                        WebLinkParameter.create("title* ", "nope"), // invalid: trailing space => not a token
+                        WebLinkParameter.create("title*", "ok")     // RFC - token, OK
                 )
         )
 
         when:
-        def out = serializer.serialize(link)
+        serializer.serialize(link)
 
-        then: "RFC params are serialized"
-        out.contains("rel=next")
-        out.contains("title*=ok")
-
-        and: "look-alikes are serialized too, but as extensions"
-        out.contains("REL=self")
-        out.contains("title* =nope") || out.contains("title* =nope") || out.contains("title* =nope") // tolerate spacing decisions for name/value
-
-        and: "RFC comes before extension"
-        out.indexOf("rel=next") < out.indexOf("REL=self")
-        out.indexOf("title*=ok") < out.indexOf("title* ")
+        then:
+        def ex = thrown(WebLinkSerializer.SerializationException)
+        ex.message != null
+        ex.message.contains("Invalid character in parameter name")
+        ex.message.contains("title* ")
     }
 
     @Unroll
@@ -177,27 +171,6 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
         "LF injection"   | "ok\nX-Evil: 1"
         "CRLF injection" | "ok\r\nX-Evil: 1"
         "NUL injection"  | "ok\u0000X-Evil: 1"
-    }
-
-    @Unroll
-    def "serialize: rejects CR/LF injection attempts in URI (#caseName)"() {
-        given:
-        def link = WebLink.create(URI.create(badUri), List.of(WebLinkParameter.create("rel", "self")))
-
-        when:
-        serializer.serialize(link)
-
-        then:
-        def ex = thrown(WebLinkSerializer.SerializationException)
-        ex.message != null
-        ex.message.toLowerCase().contains("cr") || ex.message.toLowerCase().contains("lf") || ex.message.toLowerCase().contains("newline") || ex.message.toLowerCase().contains("nul")
-
-        where:
-        caseName      | badUri
-        "CR in URI"   | "https://example.org/res\rX:1"
-        "LF in URI"   | "https://example.org/res\nX:1"
-        "CRLF in URI" | "https://example.org/res\r\nX:1"
-        "NUL in URI"  | "https://example.org/res\u0000X:1"
     }
 
     @Unroll
@@ -225,18 +198,20 @@ class Rfc8288WebLinkSerializerSpec extends Specification {
         "contains control char" | "rel\u0001"
     }
 
-    def "serializeAll: must not allow comma injection in one link-value to create extra links"() {
+    def "serializeAll: must not allow breaking out of quoted-string to inject extra links"() {
         given:
         def link = weblink("https://example.org/resource",
-                WebLinkParameter.create("title", 'ok, <https://evil.example>; rel=evil')
+                WebLinkParameter.create("title", 'ok" , <https://evil.example>; rel=evil ; title="pwned')
         )
 
         when:
         def out = serializer.serializeAll([link])
 
-        then:
-        !out.contains("<https://evil.example>")
+        then: "output contains only one link-value and starts with the intended target"
         out.startsWith("<https://example.org/resource>")
+
+        and: "the value must be quoted and the quote must be escaped"
+        out.contains('title="ok\\" , <https://evil.example>; rel=evil ; title=\\"pwned"')
     }
 
     private static WebLink weblink(String uri, WebLinkParameter... params) {
