@@ -41,23 +41,21 @@ jobs:
       - name: Set version in Maven project
         run: mvn versions:set -DnewVersion=${{ github.event.inputs.versionTag }} -DprocessAllModules
 
-      - name: Build with Maven
-        run: mvn -B -Psbom -Prelease verify --file pom.xml
+      - name: Publish artefact to Maven Central
+        run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml  -Psbom -Prelease -DskipTests deploy
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
+          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
 
-      # Generate provenance (SLSA attestation) for all JARs
+      # Generate provenance (SLSA attestation) for the produced artifacts
       - name: Generate SLSA build provenance
         uses: actions/attest-build-provenance@v3
         with:
-          subject-path: "**/target/*.jar"
-
-      - name: Publish artefact to Maven Central
-        run: mvn --quiet --settings $GITHUB_WORKSPACE/.github.settings.xml -Prelease -DskipTests deploy
-        env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          SONATYPE_CENTRAL_USERNAME: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
-          SONATYPE_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
+         subject-path: |
+           **/target/*.jar
+           **/target/*.pom
+           **/target/*.asc
 
       - name: Update CITATION.cff (version + date)
         run: |
