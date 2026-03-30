@@ -43,7 +43,7 @@ jobs:
   # main: upload to Codecov (only after merge)
       - name: Upload coverage to Codecov (main only)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
